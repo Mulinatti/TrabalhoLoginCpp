@@ -7,13 +7,14 @@ void users(std::wstring& login, std::wstring& senha) {
     std::wstring usuarios[][2] = 
     {
         {L"Joaquim", L"jqm"},
-        {L"Joaquim", L"jqm"},
-        {L"Joaquim", L"jqm"},
-        {L"Joaquim", L"jqm"},
+        {L"Vasconcelos", L"saojanu"},
+        {L"Cristóvão", L"cruzdemalta"},
+        {L"Alessander", L"cartorio"},
+        {L"Gil", L"azeitona"},
     };
 
-    //login = usuarios[0];
-    senha = L"flu10";
+    login = usuarios[0][0];
+    senha = usuarios[0][1];
 }
 
 // Função de callback da janela
