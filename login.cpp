@@ -4,28 +4,32 @@
 
 bool users(std::wstring& login, std::wstring& senha) {
 
-    bool flag;
+    bool existe;
 
-    std::wstring usuarios[5][2] = 
+    std::wstring usuarios[][2] = 
     {
-        {L"Joaquim", L"jqm"},
-        {L"Vasconcelos", L"saojanu"},
-        {L"Cristovao", L"cruzdemalta"},
-        {L"Alessander", L"cartorio"},
-        {L"Gil", L"azeitona"},
+        {L"Joaquim", L"vectraCd2000"},
+        {L"Vasconcelos", L"vasconene10"},
+        {L"Cristovao", L"flajovem"},
+        {L"Alessander", L"advogadosflu"},
+        {L"Gil", L"putfire1910"},
     };
 
-    for (size_t i = 0; i < 5; i++) {
+    /*Size dividido por 2, no caso 2 por causa do numero de colunas, que multiplicado
+    pelo numero de linhas e dividido por 2 sempre retornara o numero de linhas da matriz
+    o ainda retornaria 5 por exemplo se existisse 3 colunas*/
+    int size = (sizeof(usuarios) / sizeof(usuarios[0][0])) / 2;
+
+    for (int i = 0; i < size; i++) {
         if(login == usuarios[i][0]) {
-            if(senha == usuarios[i][1]) {
-                flag = true;
-            }
+            if(senha == usuarios[i][1]) //compara login e senha e altera a variavel existe, se existir um index
+                existe = true;          //dentro da matriz
             else 
-                flag = false;     
+                existe = false;     
         }
     }
-    if(flag)
-        return true;
+    if(existe)
+        return true; //retorna true ou false para a variavel auth sendo chamada na callback
     else
         return false;
 }
@@ -67,9 +71,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                     std::wstring login = usernameStr;
                     std::wstring senha = passwordStr;
 
+                    //login e senha sao passados para a função que retornará true ou false
+
                     bool auth = users(login, senha);
 
-                    if (auth) {
+                    if (auth) { //se auth for true exibirá a mensagem de boas vindas
                         std::wstring welcomeMessage = L"Bem-vindo, " + usernameStr + L"!";
                         MessageBoxW(hwnd, welcomeMessage.c_str(), L"Login bem-sucedido", MB_OK);
                     } else {
