@@ -2,19 +2,32 @@
 #include <string>
 #include <iostream>
 
-void users(std::wstring& login, std::wstring& senha) {
+bool users(std::wstring& login, std::wstring& senha) {
 
-    std::wstring usuarios[][2] = 
+    bool flag;
+
+    std::wstring usuarios[5][2] = 
     {
         {L"Joaquim", L"jqm"},
         {L"Vasconcelos", L"saojanu"},
-        {L"Cristóvão", L"cruzdemalta"},
+        {L"Cristovao", L"cruzdemalta"},
         {L"Alessander", L"cartorio"},
         {L"Gil", L"azeitona"},
     };
 
-    login = usuarios[0][0];
-    senha = usuarios[0][1];
+    for (size_t i = 0; i < 5; i++) {
+        if(login == usuarios[i][0]) {
+            if(senha == usuarios[i][1]) {
+                flag = true;
+            }
+            else 
+                flag = false;     
+        }
+    }
+    if(flag)
+        return true;
+    else
+        return false;
 }
 
 // Função de callback da janela
@@ -51,12 +64,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                     std::wstring usernameStr(username);
                     std::wstring passwordStr(password);
 
-                    std::wstring login;
-                    std::wstring senha;
+                    std::wstring login = usernameStr;
+                    std::wstring senha = passwordStr;
 
-                    users(login, senha);
+                    bool auth = users(login, senha);
 
-                    if (usernameStr == login && passwordStr == senha) {
+                    if (auth) {
                         std::wstring welcomeMessage = L"Bem-vindo, " + usernameStr + L"!";
                         MessageBoxW(hwnd, welcomeMessage.c_str(), L"Login bem-sucedido", MB_OK);
                     } else {
